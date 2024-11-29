@@ -151,14 +151,14 @@ class BrickPoseEstimator:
 
 # Example usage
 def main():
-    model_path = "YOLO11/weight/2024-11-28(2024-11-27_vertical_aug).pt"
+    model_path = "YOLO11/weight/2024-11-29-pose-yolo11-1000epoch(2024-11-27_vertical_aug).pt"
     estimator = BrickPoseEstimator(model_path)
     
     # Get all rgb.png files
     rgb_files = glob.glob("dataset/dataset_720p/**/rgb.png", recursive=True)
     
     # Take first 10 images
-    selected_files = rgb_files[:10]
+    selected_files = random.sample(rgb_files, 10)
     
     for i, file_path in enumerate(selected_files):
         # Read and process image
