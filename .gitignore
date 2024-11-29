@@ -1,3 +1,6 @@
 dataset/
 results/
 YOLO11/weight/
+backups/
+1127_vertical_aug/
+YOLO11/
