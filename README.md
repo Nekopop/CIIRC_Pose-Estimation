@@ -1,75 +1,73 @@
-# YOLOv11 Pose Estimation Project
+# How to Use YOLO11/app
 
-## Project Purpose
-- Training and evaluation of YOLOv11 model for pose estimation of Bricks
-- Preprocessing and augmentation of the dataset
-- Implementation of distance estimation
+This guide summarizes how to use the main scripts in the `YOLO11/app` folder. It assumes the process of detecting objects and estimating poses from camera footage, saving the results as images.
 
-## Code Structure and Functions
+---
 
-### 
+## 1. Setup
 
-pose.py
+### 1.1 Preparing the Python Environment
+- Ensure that Python 3.x is installed.
+- It is recommended to use a virtual environment such as `venv` or `conda`.
 
+### 1.2 Installing Dependencies
+- Install the required libraries. Below is an example (add more as needed):
 
-Distance estimation for Bricks
-- **Function**: Keypoint detection and 3D pose estimation
-- **Usage**:
 ```bash
-python pose.py
+pip install opencv-python-headless numpy ultralytics
 ```
-- **Input**: Image resized to 640x640
-- **Output**: Visualization of keypoint detection and distance estimation results
 
-### 
+- The main libraries used in the scripts are:
 
-train.py
+```python
+import cv2
+import numpy as np
+from ultralytics import YOLO
+import random
+import glob
+import os
+import argparse
+```
 
+---
 
-Training of YOLOv11 model
-- **Function**: Training of pose estimation model
-- **Usage**:
+## 2. Execution Steps
+
+### 2.1 Running Distance Estimation
+Use the following command to perform distance estimation:
+
 ```bash
-python train.py
+python YOLO11/app/test.py
+  --model YOLO11/weight/2024-12-10-pose-yolo11s-500epoch_2024-11-27_vertical_aug.pt
+  --input dataset
 ```
-- **Output**: 
-  - Training log (date-time.txt)
-  - Trained model
 
-### 
+- `--model`: Specify the path to the model to be used.
+- `--input`: Specify the dataset directory to be processed.
 
-save_command_output.py
+### 2.2 Evaluating Distance Estimation Accuracy
+Use the following command to evaluate the accuracy of distance estimation:
 
-
-Save command line input and training results
-- **Function**: Save command line input and training results in the same file
-- **Usage**:
 ```bash
-python save_command_output.py
-```
-- **Output**: 
-  - File containing command line input and training results (`YYYY-MM-DD_HH-MM-SS.txt`)
-
-## Dataset Structure
-```
-dataset/
-├── YOLOv11/
-│   ├── train/
-│   │   ├── images/
-│   │   └── labels/
-│   ├── valid/
-│   └── test/
-└── YOLOv11_augmented/
-    └── train/
-        ├── images/
-        └── labels/
+python YOLO11/app/pose_eval.py
 ```
 
-## Required Packages
+- This evaluation requires `rgb_frame` and `depth_frame` included in a `db3` file. Ensure these are prepared.
+
+### 2.3 Converting the Dataset
+Convert the YOLOv8pose training dataset to COCO format, making it uploadable to Roboflow:
+
 ```bash
-pip install ultralytics opencv-python numpy matplotlib
+python YOLO11/app/YOLOv8pose2COCO.py
 ```
+
+- Set `input_base_dir` and `output_base_dir` in the script.
+
+---
 
 ## Notes
-- The order of keypoints is clockwise starting from the bottom left
-- The dataset annotation format conforms to YOLOv8 format
+- Check the necessary data and paths before running each script.
+- Using a virtual environment can help prevent dependency conflicts.
+
+With this, you are ready to correctly use the scripts in the `YOLO11/app` folder.
+

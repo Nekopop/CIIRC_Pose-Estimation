@@ -1,6 +1,9 @@
 dataset/
 results/
-YOLO11/weight/
 backups/
 1127_vertical_aug/
-YOLO11/
+YOLO11/app-sub/tools
+YOLO11/app-sub/weight
+coco_dataset/
+test/
+rotated/
